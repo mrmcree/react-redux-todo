@@ -2,25 +2,7 @@ import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM, CHANGE_STATE, INIT
 import axios from 'axios'
 import store from './index'
 import { message } from 'antd'
-export const getInputChangeAction = (value) => ({
-    type: CHANGE_INPUT_VALUE,
-    value
-})
-export const addTodoAction = () => ({
-    type: ADD_TODO_ITEM
-})
-export const changeState = (index) => ({
-    type: CHANGE_STATE,
-    index
-})
-export const deleteTodoAction = (index) => ({
-    type: DELETE_TODO_ITEM,
-    index
-})
-export const initListAction = (data) => ({
-    type: INIT_LIST_ACTION,
-    data
-})
+
 export const getTodoList = () => {
     return (dispatch) => {
         axios.get('./api/list.json')//上面已经引入地址
@@ -31,8 +13,6 @@ export const getTodoList = () => {
             })
 
     }
-
-
 }
 export const changeInputValue = (e) => {
     return (dispatch) => {
