@@ -1,44 +1,29 @@
 import React from 'react'
 import { List, Tag, Switch, Icon } from 'antd'
-import store from './store/index.js'
-import { deleteTodoAction, changeState } from './store/actionCreators'
-class ListItem extends React.Component {
-   
-  
-    handleItemDelete(index) {
-        const action = deleteTodoAction(index)
-        store.dispatch(action)
+import store from './store'
 
-    }
-    handleStateChange(index) {
-        const action = changeState(index)
-        store.dispatch(action)
-    }
+const ListItem = (props) => {
+    return (
+        <div>
+            <List
+                dataSource={props.list}
+                renderItem={(item, index) => (
+                    <List.Item style={{ "textDecorationLine": item.complete ? 'line-through' : 'none' }}
 
-    render() {
-        return (
+                    >
+                        <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} defaultChecked onChange={() => { props.handleStateChange(store.getState().list.indexOf(item)) }} checked={!item.complete ? false : true} />
+                        {item.ctx}
 
-            <div>
-                
-                <List
-                    dataSource={this.props.list}
-                    
-                    renderItem={(item, index) => (
-                        <List.Item style={{ "textDecorationLine": item.complete ? 'line-through' : 'none' }}
-                       
-                        >
-                        
-                            <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="close" />} defaultChecked onChange={this.handleStateChange.bind(this, index)} checked={!item.complete ? false : true} />
-                            {item.ctx}
-                            <Tag>{item.time}</Tag>
-                            <Icon type="delete" theme="twoTone" onClick={this.handleItemDelete.bind(this, index)} />
-                        </List.Item>)}
-                        
-                    bordered
+                        <Tag>{item.time}</Tag>
+                        <Icon type="delete" theme="twoTone" onClick={() => { props.handleItemDelete(store.getState().list.indexOf(item)) }} />
+                    </List.Item>)}
 
-                />
-            </div>
-        )
-    }
+                bordered
+
+            />
+        </div>
+    )
 }
+
+
 export default ListItem
